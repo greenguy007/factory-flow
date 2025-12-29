@@ -8,10 +8,11 @@ import {
   TableRow,
 } from '@/components/ui/table';
 import { StatusBadge } from '@/components/StatusBadge';
+import { ImagePreview } from '@/components/ImagePreview';
 import { useInventory } from '@/context/InventoryContext';
 
 export default function Machines() {
-  const { machines, getReadyMachinesCount } = useInventory();
+  const { machines, getReadyMachinesCount, getMachineImage } = useInventory();
 
   const formatDate = (dateString: string) => {
     return new Date(dateString).toLocaleDateString('en-US', {
@@ -43,6 +44,7 @@ export default function Machines() {
         <Table>
           <TableHeader>
             <TableRow>
+              <TableHead className="text-base w-16">Image</TableHead>
               <TableHead className="text-base">Machine ID</TableHead>
               <TableHead className="text-base">Machine Name</TableHead>
               <TableHead className="text-base">Date Manufactured</TableHead>
@@ -53,13 +55,19 @@ export default function Machines() {
           <TableBody>
             {machines.length === 0 ? (
               <TableRow>
-                <TableCell colSpan={5} className="text-center py-8 text-muted-foreground">
+                <TableCell colSpan={6} className="text-center py-8 text-muted-foreground">
                   No machines ready for shipment yet
                 </TableCell>
               </TableRow>
             ) : (
               machines.map((machine) => (
                 <TableRow key={machine.id}>
+                  <TableCell>
+                    <ImagePreview 
+                      src={machine.image || getMachineImage(machine.name)} 
+                      alt={machine.name} 
+                    />
+                  </TableCell>
                   <TableCell className="font-medium text-base">{machine.id}</TableCell>
                   <TableCell className="text-base">{machine.name}</TableCell>
                   <TableCell className="text-base">{formatDate(machine.dateManufactured)}</TableCell>

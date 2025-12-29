@@ -1,6 +1,6 @@
 import { createContext, useContext, useState, ReactNode } from 'react';
 import { Part, Order, Machine, getPartStatus, getOrderStatus } from '@/types/inventory';
-import { initialParts, initialOrders, initialMachines } from '@/data/mockData';
+import { initialParts, initialOrders, initialMachines, machineImages } from '@/data/mockData';
 
 interface InventoryContextType {
   parts: Part[];
@@ -15,6 +15,7 @@ interface InventoryContextType {
   getActiveOrdersCount: () => number;
   getInProcessOrdersCount: () => number;
   getReadyMachinesCount: () => number;
+  getMachineImage: (machineName: string) => string | undefined;
 }
 
 const InventoryContext = createContext<InventoryContextType | undefined>(undefined);
@@ -71,6 +72,7 @@ export function InventoryProvider({ children }: { children: ReactNode }) {
     if (status === 'Completed') {
       const order = orders.find((o) => o.id === id);
       if (order) {
+        const machineImage = getMachineImage(order.machineName);
         const newMachines: Machine[] = Array.from(
           { length: order.quantityOrdered },
           (_, i) => ({
@@ -79,6 +81,7 @@ export function InventoryProvider({ children }: { children: ReactNode }) {
             dateManufactured: new Date().toISOString().split('T')[0],
             status: 'Ready' as const,
             orderId: id,
+            image: machineImage,
           })
         );
         setMachines((prev) => [...prev, ...newMachines]);
@@ -105,6 +108,10 @@ export function InventoryProvider({ children }: { children: ReactNode }) {
     return machines.filter((machine) => machine.status === 'Ready').length;
   };
 
+  const getMachineImage = (machineName: string): string | undefined => {
+    return machineImages[machineName];
+  };
+
   return (
     <InventoryContext.Provider
       value={{
@@ -120,6 +127,7 @@ export function InventoryProvider({ children }: { children: ReactNode }) {
         getActiveOrdersCount,
         getInProcessOrdersCount,
         getReadyMachinesCount,
+        getMachineImage,
       }}
     >
       {children}

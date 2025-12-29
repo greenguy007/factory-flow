@@ -26,6 +26,8 @@ import {
   TableRow,
 } from '@/components/ui/table';
 import { StatusBadge } from '@/components/StatusBadge';
+import { ImagePreview } from '@/components/ImagePreview';
+import { ImageUpload } from '@/components/ImageUpload';
 import { useInventory } from '@/context/InventoryContext';
 import { getPartStatus, Part } from '@/types/inventory';
 import { partCategories } from '@/data/mockData';
@@ -44,6 +46,7 @@ export default function Parts() {
     category: 'Part' as 'Part' | 'Spare',
     availableQuantity: 0,
     minimumQuantity: 0,
+    image: undefined as string | undefined,
   });
 
   const [stockQuantity, setStockQuantity] = useState(0);
@@ -54,7 +57,7 @@ export default function Parts() {
       return;
     }
     addPart(newPart);
-    setNewPart({ name: '', category: 'Part', availableQuantity: 0, minimumQuantity: 0 });
+    setNewPart({ name: '', category: 'Part', availableQuantity: 0, minimumQuantity: 0, image: undefined });
     setIsAddOpen(false);
     toast({ title: 'Success', description: 'Part added successfully' });
   };
@@ -162,6 +165,10 @@ export default function Parts() {
                   }
                 />
               </div>
+              <ImageUpload
+                value={newPart.image}
+                onChange={(image) => setNewPart({ ...newPart, image })}
+              />
               <Button onClick={handleAddPart} className="w-full">
                 Add Part
               </Button>
@@ -174,6 +181,7 @@ export default function Parts() {
         <Table>
           <TableHeader>
             <TableRow>
+              <TableHead className="text-base w-16">Image</TableHead>
               <TableHead className="text-base">Part Name</TableHead>
               <TableHead className="text-base">Category</TableHead>
               <TableHead className="text-base text-center">Available</TableHead>
@@ -185,6 +193,9 @@ export default function Parts() {
           <TableBody>
             {parts.map((part) => (
               <TableRow key={part.id}>
+                <TableCell>
+                  <ImagePreview src={part.image} alt={part.name} />
+                </TableCell>
                 <TableCell className="font-medium text-base">{part.name}</TableCell>
                 <TableCell className="text-base">{part.category}</TableCell>
                 <TableCell className="text-center text-base">{part.availableQuantity}</TableCell>

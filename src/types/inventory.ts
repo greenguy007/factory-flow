@@ -4,6 +4,7 @@ export interface Part {
   category: 'Part' | 'Spare';
   availableQuantity: number;
   minimumQuantity: number;
+  image?: string;
 }
 
 export type OrderStatus = 'Pending' | 'In Process' | 'Completed' | 'Delayed';
@@ -23,6 +24,7 @@ export interface Machine {
   dateManufactured: string;
   status: 'Ready';
   orderId: string;
+  image?: string;
 }
 
 export type PartStatus = 'OK' | 'Low';
