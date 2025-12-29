@@ -43,3 +43,6 @@ export const machineModels = [
 ];
 
 export const partCategories = ['Part', 'Spare'] as const;
+
+// Machine images mapping - can be updated when actual images are available
+export const machineImages: Record<string, string> = {};
