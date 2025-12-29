@@ -57,6 +57,30 @@ export default {
           border: "hsl(var(--sidebar-border))",
           ring: "hsl(var(--sidebar-ring))",
         },
+        status: {
+          ok: "hsl(var(--status-ok))",
+          "ok-bg": "hsl(var(--status-ok-bg))",
+          low: "hsl(var(--status-low))",
+          "low-bg": "hsl(var(--status-low-bg))",
+          delayed: "hsl(var(--status-delayed))",
+          "delayed-bg": "hsl(var(--status-delayed-bg))",
+          pending: "hsl(var(--status-pending))",
+          "pending-bg": "hsl(var(--status-pending-bg))",
+          process: "hsl(var(--status-process))",
+          "process-bg": "hsl(var(--status-process-bg))",
+          completed: "hsl(var(--status-completed))",
+          "completed-bg": "hsl(var(--status-completed-bg))",
+        },
+        dashboard: {
+          warning: "hsl(var(--card-warning))",
+          "warning-bg": "hsl(var(--card-warning-bg))",
+          info: "hsl(var(--card-info))",
+          "info-bg": "hsl(var(--card-info-bg))",
+          success: "hsl(var(--card-success))",
+          "success-bg": "hsl(var(--card-success-bg))",
+          process: "hsl(var(--card-process))",
+          "process-bg": "hsl(var(--card-process-bg))",
+        },
       },
       borderRadius: {
         lg: "var(--radius)",
@@ -65,20 +89,12 @@ export default {
       },
       keyframes: {
         "accordion-down": {
-          from: {
-            height: "0",
-          },
-          to: {
-            height: "var(--radix-accordion-content-height)",
-          },
+          from: { height: "0" },
+          to: { height: "var(--radix-accordion-content-height)" },
         },
         "accordion-up": {
-          from: {
-            height: "var(--radix-accordion-content-height)",
-          },
-          to: {
-            height: "0",
-          },
+          from: { height: "var(--radix-accordion-content-height)" },
+          to: { height: "0" },
         },
       },
       animation: {
